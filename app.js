@@ -7,6 +7,7 @@ import auth from "./routes/auth.js";
 import connectDB from "./db/connect.js";
 import errorHandler from "./middleware/error-handler.js";
 import notFound from "./middleware/not-found.js";
+import users from "./routes/auth.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(bodyParser.json({ limit: "20mb", extended: true }));
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/products", products);
 app.use("/api/v1/sales", sales);
+app.use("/api/v1/users", users);
 app.use(notFound);
 app.use(errorHandler);
 

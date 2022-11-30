@@ -1,4 +1,5 @@
 import User from "../models/users.js";
+import asyncWrapper from "../middleware/async.js";
 
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -56,6 +57,39 @@ export const login = async (req, res) => {
     token,
   });
 };
+
+export const getUsers = asyncWrapper(async (req, res) => {
+  const users = await User.find({});
+  res.status(200).json({ users });
+});
+
+// export const getUser = asyncWrapper(async (req, res) => {
+//   const { id: userID } = req.params;
+//   const user = await Product.findOne({ _id: userID });
+//   if (!user) {
+//     return res.status(404).json({ msg: `No user with id: ${userID}` });
+//   }
+//   res.status(200).json({ user });
+// });
+
+// export const updateUser = asyncWrapper(async (req, res) => {
+//   const { id: userID } = req.params;
+
+//   const user = await User.findByIdAndUpdate(
+//     { _id: userID },
+//     req.body,
+//     {
+//       new: true,
+//       runValidators: true,
+//     }
+//   );
+
+//   if (!user) {
+//     return res.status(404).json({ msg: `No product with id: ${userID}` });
+//   }
+
+//   res.status(200).json({ user });
+// });
 
 export const dashboard = async (req, res) => {
   res.status(200).json({
