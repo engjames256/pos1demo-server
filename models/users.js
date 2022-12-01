@@ -4,9 +4,6 @@ import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
-    id: {
-      type: Number,
-    },
     name: {
       type: String,
       required: [true, "Please provide name"],
@@ -44,8 +41,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["Manager", "Customer", "Cashier"],
-      default: "Customer",
+      enum: ["Manager", "Cashier"],
+      default: "Cashier",
     },
   },
   {
@@ -82,11 +79,6 @@ userSchema.methods.comparePassword = async function (canditatePassword) {
   const isMatch = await bcrypt.compare(canditatePassword, this.password);
   return isMatch;
 };
-
-userSchema.plugin(AutoIncrement, {
-  id: "product_seq",
-  inc_field: "id",
-});
 
 const user = mongoose.model("user", userSchema);
 
